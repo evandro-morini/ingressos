@@ -1,0 +1,51 @@
+<?php echo $this->doctype(); ?>
+<html>
+    <head>
+        <?php echo $this->headMeta(); ?>
+        <?php echo $this->headTitle('Venda de ingressos'); ?>
+
+        <!-- JS -->
+        <?php $this->headScript()->appendFile($this->baseURL() . '/js/jquery-2.1.1.js'); ?>
+        <?php $this->headScript()->appendFile($this->baseURL() . '/js/bootstrap.min.js'); ?>
+        <?php echo $this->headScript(); ?>
+
+        <!-- CSS -->
+        <?php $this->headLink()->appendStylesheet($this->baseURL() . '/css/bootstrap.min.css', 'screen') ?>
+        <?php echo $this->headLink(); ?>    
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="http://localhost/zend/public/">Venda de ingressos</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right" role="form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Senha" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Entrar</button>
+                    </form>
+                </div><!--/.navbar-collapse -->
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="content">
+                <?php echo $this->layout()->content; ?>
+            </div>
+
+            <hr>
+
+            <footer>
+                <p>&copy; Evandro Morini 2014</p>
+            </footer>
+        </div> <!-- /container -->
+
+    </body>
+</html>
