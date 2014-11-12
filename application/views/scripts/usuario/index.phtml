@@ -1,0 +1,33 @@
+<?php 
+$this->title = "Usuários";
+$this->headTitle($this->title);
+?>
+<br /><br /><br /><br /><br /><br />
+<table>
+    <tr>
+        <th>CPF</th>
+        <th>Nome</th>
+        <th>RG</th>
+        <th>Data Nasc</th>
+        <th>CEP</th>
+        <th>Endereço</th>
+        <th>Número</th>
+        <th>Cidade</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <?php foreach($this->usuarios as $usuario) : ?>
+    <tr>
+        <td><?php echo $this->escape($usuario->cpf); ?></td>
+        <td><?php echo $this->escape($usuario->nome); ?></td>
+        <td><?php echo $this->escape($usuario->rg); ?></td>
+        <td><?php echo $this->escape($usuario->dataNasc); ?></td>
+        <td><?php echo $this->escape($usuario->cep); ?></td>
+        <td><?php echo $this->escape($usuario->endereco); ?></td>
+        <td><?php echo $this->escape($usuario->numEndereco); ?></td>
+        <td><?php echo $this->escape($usuario->cidade); ?></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'editUsuario', 'cpf'=>$usuario->cpf));?>">Editar</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'deleteUsuario', 'cpf'=>$usuario->cpf));?>">Excluir</a></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
