@@ -7,7 +7,6 @@ class Application_Model_DbTable_Usuario extends Zend_Db_Table_Abstract
 
     public function getUsuario($cpf) 
     {
-        $cpf = (int)$cpf;
         $row = $this->fetchRow('cpf = ' . $cpf);
         if (!$row) {
             throw new Exception("Não foi possível localizar o Usuário de CPF: $cpf");
@@ -51,7 +50,7 @@ class Application_Model_DbTable_Usuario extends Zend_Db_Table_Abstract
     
     public function deleteUsuario($cpf)
     {
-        $this->delete('cpf =' . (int)$cpf);
+        $this->delete('cpf =' . $cpf);
     }
 
 }
