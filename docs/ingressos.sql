@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 16-Nov-2014 às 19:33
+-- Generation Time: 16-Nov-2014 às 23:08
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,6 +19,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `ingressos`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `auth`
+--
+
+CREATE TABLE IF NOT EXISTS `auth` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(15) NOT NULL,
+  `pw` varchar(60) NOT NULL,
+  `isAdm` bit(1) NOT NULL,
+  `userCpf` bigint(11) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login_UNIQUE` (`login`),
+  KEY `fk_userCpf_idx` (`userCpf`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `auth`
+--
+
+INSERT INTO `auth` (`id`, `login`, `pw`, `isAdm`, `userCpf`) VALUES
+(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', b'1', 04763305999),
+(3, 'patisantos', '277cedf225bcf1f3e6b844d49fcdfdd8c31e736a', b'1', 06499454923);
 
 -- --------------------------------------------------------
 
@@ -115,11 +140,18 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`cpf`, `nome`, `rg`, `dataNasc`, `cep`, `endereco`, `numEndereco`, `bairro`, `cidade`, `estado`, `jogo1`, `jogo2`, `jogo3`) VALUES
-(04763305999, 'Evandro Morini Silva', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL);
+(04763305999, 'Satanildo Souza', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL),
+(06499454923, 'Patrícia Pacheco dos Santos', '85564447', '1987-11-15', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'Paraná', NULL, NULL, NULL);
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Limitadores para a tabela `auth`
+--
+ALTER TABLE `auth`
+  ADD CONSTRAINT `fk_userCpf` FOREIGN KEY (`userCpf`) REFERENCES `usuario` (`cpf`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `jogo`
