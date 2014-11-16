@@ -45,7 +45,7 @@ class Application_Model_DbTable_Usuario extends Zend_Db_Table_Abstract
             'cidade' => $cidade,
             'estado' => $estado,
         );        
-    $this->update($data, 'cpf = '. (int)$cpf);
+    $this->update($data, 'cpf = '. $cpf);
     }
     
     public function deleteUsuario($cpf)

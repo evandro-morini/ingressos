@@ -10,8 +10,12 @@ class UsuarioController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $usuarios = new Application_Model_DbTable_Usuario();
-        $this->view->usuarios = $usuarios->fetchAll();
+        $log = Zend_Auth::getInstance();
+        if ($log->hasIdentity()) {
+            $cpf = $log->getIdentity()->userCpf;
+            $auth = new Application_Model_DbTable_Auth();
+            $this->view->auth = $auth->getAuth($cpf);
+        }
     }
 
     public function novoAction()
@@ -28,8 +32,14 @@ class UsuarioController extends Zend_Controller_Action
             $cidade = $_POST['cidade'];
             $estado = $_POST['estado'];
             
+            $login = $_POST['login'];
+            $pw = $_POST['pw'];
+            
             $usuarios = new Application_Model_DbTable_Usuario();
             $usuarios->addUsuario($cpf, $nome, $rg, $dataNasc, $cep, $endereco, $numEndereco, $bairro, $cidade, $estado);
+            
+            $auth = new Application_Model_DbTable_Auth();
+            $auth->addAuth($login, $pw, $cpf);
             
             $this->_helper->redirector('index');
         }
@@ -51,12 +61,13 @@ class UsuarioController extends Zend_Controller_Action
             
             $usuarios = new Application_Model_DbTable_Usuario();
             $usuarios->updateUsuario($cpf, $nome, $rg, $dataNasc, $cep, $endereco, $numEndereco, $bairro, $cidade, $estado);
-            
             $this->_helper->redirector('index');
         } else {
             $cpf = $this->_getParam('cpf');
             $usuarios = new Application_Model_DbTable_Usuario();
             $this->view->usuarios = $usuarios->getUsuario($cpf);
+            $auth = new Application_Model_DbTable_Auth();
+            $this->view->auth = $auth->getAuth($cpf);
         }
     }
     
@@ -76,9 +87,18 @@ class UsuarioController extends Zend_Controller_Action
         $this->view->usuarios = $usuarios->getUsuario($cpf);
         } 
     }
+    
+    public function listaAction ()
+    {
+        $log = Zend_Auth::getInstance();
+        if ($log->hasIdentity()) {
+            $adm = $log->getIdentity()->isAdm;
 
+            if($adm == 1) {
+                $usuarios = new Application_Model_DbTable_Usuario();
+                $this->view->usuarios = $usuarios->fetchAll(); 
+            } 
+        }
+    }
 
 }
-
-
-
