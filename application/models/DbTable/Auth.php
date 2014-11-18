@@ -35,6 +35,11 @@ class Application_Model_DbTable_Auth extends Zend_Db_Table_Abstract
         );        
     $this->update($data, 'userCpf = '. $cpf);
     }
+    
+     public function deleteAuth($cpf)
+    {
+        $this->delete('userCpf =' . $cpf);
+    }
 
 }
 

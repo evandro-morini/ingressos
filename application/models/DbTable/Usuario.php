@@ -52,6 +52,22 @@ class Application_Model_DbTable_Usuario extends Zend_Db_Table_Abstract
     {
         $this->delete('cpf =' . $cpf);
     }
+    
+    public function reservaJogo($cpf, $idJogo, $ordem)
+    {
+        $data = array(
+            "$ordem" => "$idJogo",
+        );
+    $this->update($data, 'cpf = '. $cpf);
+    }
+    
+    public function verificaReserva ($cpf, $coluna)
+    {
+        $sql = $this->_db->select()
+            ->from('usuario',array("$coluna"))
+            ->where('cpf = ?', $cpf);      
+        return $this->_db->fetchrow($sql);
+    }
 
 }
 

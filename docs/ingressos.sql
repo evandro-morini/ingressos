@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 16-Nov-2014 às 23:08
+-- Generation Time: 18-Nov-2014 às 22:22
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -35,15 +35,14 @@ CREATE TABLE IF NOT EXISTS `auth` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `fk_userCpf_idx` (`userCpf`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Extraindo dados da tabela `auth`
 --
 
 INSERT INTO `auth` (`id`, `login`, `pw`, `isAdm`, `userCpf`) VALUES
-(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', b'1', 04763305999),
-(3, 'patisantos', '277cedf225bcf1f3e6b844d49fcdfdd8c31e736a', b'1', 06499454923);
+(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', b'1', 04763305999);
 
 -- --------------------------------------------------------
 
@@ -53,16 +52,25 @@ INSERT INTO `auth` (`id`, `login`, `pw`, `isAdm`, `userCpf`) VALUES
 
 CREATE TABLE IF NOT EXISTS `jogo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_time1` int(11) NOT NULL,
-  `id_time2` int(11) NOT NULL,
+  `nomeTime1` varchar(45) NOT NULL,
+  `nomeTime2` varchar(45) NOT NULL,
   `data` date NOT NULL,
   `hora` time NOT NULL,
   `local` varchar(255) NOT NULL,
   `vagas` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_time1_idx` (`id_time1`),
-  KEY `fk_time2_idx` (`id_time2`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `fk_time1_idx` (`nomeTime1`),
+  KEY `fk_time2_idx` (`nomeTime2`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1004 ;
+
+--
+-- Extraindo dados da tabela `jogo`
+--
+
+INSERT INTO `jogo` (`id`, `nomeTime1`, `nomeTime2`, `data`, `hora`, `local`, `vagas`) VALUES
+(1001, 'Irã', 'Nigéria', '2014-11-18', '16:00:00', 'Arena, Curitiba PR', 25000),
+(1002, 'Espanha', 'Irã', '2014-11-21', '19:00:00', 'Arena, Curitiba PR', 25000),
+(1003, 'Rússia', 'Argélia', '2015-08-25', '17:00:00', 'Arena, Curitiba PR', 24900);
 
 -- --------------------------------------------------------
 
@@ -105,9 +113,23 @@ CREATE TABLE IF NOT EXISTS `ticket` (
 CREATE TABLE IF NOT EXISTS `time` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
-  `img` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`id`),
+  KEY `NOMETIME` (`nome`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Extraindo dados da tabela `time`
+--
+
+INSERT INTO `time` (`id`, `nome`) VALUES
+(8, 'Argélia'),
+(4, 'Austrália'),
+(7, 'Equador'),
+(5, 'Espanha'),
+(6, 'Honduras'),
+(2, 'Irã'),
+(3, 'Nigéria'),
+(9, 'Rússia');
 
 -- --------------------------------------------------------
 
@@ -129,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `jogo1` int(11) DEFAULT NULL,
   `jogo2` int(11) DEFAULT NULL,
   `jogo3` int(11) DEFAULT NULL,
+  `sorteado` bit(1) NOT NULL,
   PRIMARY KEY (`cpf`),
   KEY `fk_jogo1_idx` (`jogo1`),
   KEY `fk_jogo2_idx` (`jogo2`),
@@ -139,9 +162,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`cpf`, `nome`, `rg`, `dataNasc`, `cep`, `endereco`, `numEndereco`, `bairro`, `cidade`, `estado`, `jogo1`, `jogo2`, `jogo3`) VALUES
-(04763305999, 'Satanildo Souza', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL),
-(06499454923, 'Patrícia Pacheco dos Santos', '85564447', '1987-11-15', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'Paraná', NULL, NULL, NULL);
+INSERT INTO `usuario` (`cpf`, `nome`, `rg`, `dataNasc`, `cep`, `endereco`, `numEndereco`, `bairro`, `cidade`, `estado`, `jogo1`, `jogo2`, `jogo3`, `sorteado`) VALUES
+(04763305999, 'Evandro Morini Silva', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL, b'0');
 
 --
 -- Constraints for dumped tables
@@ -157,8 +179,8 @@ ALTER TABLE `auth`
 -- Limitadores para a tabela `jogo`
 --
 ALTER TABLE `jogo`
-  ADD CONSTRAINT `fk_time1` FOREIGN KEY (`id_time1`) REFERENCES `time` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_time2` FOREIGN KEY (`id_time2`) REFERENCES `time` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_time1` FOREIGN KEY (`nomeTime1`) REFERENCES `time` (`nome`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_time2` FOREIGN KEY (`nomeTime2`) REFERENCES `time` (`nome`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `sorteio`

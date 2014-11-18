@@ -32,4 +32,5 @@ $this->headTitle($this->title);
         <td><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'delete', 'cpf'=>$usuario->cpf));?>">Excluir</a></td>
     </tr>
     <?php endforeach; ?>
-</table>
+</table><br />
+<a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'novo'));?>">Cadastrar novo usuário</a>

@@ -78,6 +78,8 @@ class UsuarioController extends Zend_Controller_Action
         if ($del == 'Sim') { 
         $cpf = $this->getRequest()->getPost('cpf');
         $usuarios = new Application_Model_DbTable_Usuario();
+        $auth = new Application_Model_DbTable_Auth ();
+        $auth->deleteAuth($cpf);
         $usuarios->deleteUsuario($cpf);
         }
         $this->_helper->redirector('index');
@@ -98,6 +100,47 @@ class UsuarioController extends Zend_Controller_Action
                 $usuarios = new Application_Model_DbTable_Usuario();
                 $this->view->usuarios = $usuarios->fetchAll(); 
             } 
+        }
+    }
+    
+    public function reservaAction ()
+    {
+        $idJogo = $this->_getParam('idJogo');
+        $this->view->idJogo = $idJogo;
+        
+        $j1 = 'jogo1'; $j2 = 'jogo2'; $j3 = 'jogo3';
+        $usuarios = new Application_Model_DbTable_Usuario();
+        $jogos = new Application_Model_DbTable_Jogo ();
+        $this->view->jogos = $jogos->getJogo($idJogo);
+        
+        $log = Zend_Auth::getInstance();
+        if ($log->hasIdentity()) {
+            $cpf = $log->getIdentity()->userCpf;
+            $this->view->cpf = $cpf;
+            
+            $qtdReservas1 = $usuarios->verificaReserva($cpf, $j1);
+            $this->view->qtdReservas1 = $qtdReservas1;
+            if ($qtdReservas1['jogo1'] == '') {
+                $usuarios->reservaJogo($cpf, $idJogo, $j1);
+                
+            } else {
+                $qtdReservas2 = $usuarios->verificaReserva($cpf, $j2);
+                $this->view->qtdReservas2 = $qtdReservas2;
+                if ($qtdReservas2['jogo2'] == '') {
+                $usuarios->reservaJogo($cpf, $idJogo, $j2);
+                } else {
+                    $qtdReservas3 = $usuarios->verificaReserva($cpf, $j3);
+                    $this->view->qtdReservas3 = $qtdReservas3;
+                    if ($qtdReservas3['jogo3'] == '') {
+                    $usuarios->reservaJogo($cpf, $idJogo, $j3);
+                    } else {
+                        $msg = 'Você já efetuou as três reservas possíveis!';
+                        $this->view->msg = $msg;
+                    }
+                }
+            }
+        } else {
+            $this->_redirect('auth/login');
         }
     }
 

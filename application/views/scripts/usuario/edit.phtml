@@ -12,8 +12,7 @@
         method="POST">
         
         <div class="form-group"> 
-        <label>CPF: </label>
-        <input type="text" name="cpf" class="form-control" value="<?php echo($this->usuarios['cpf']); ?>"/>
+        <input type="hidden" name="cpf" class="form-control" value="<?php echo($this->usuarios['cpf']); ?>"/>
         </div>
         <div class="form-group">   
         <label>Nome: </label>
@@ -50,6 +49,9 @@
         <div class="form-group"> 
         <label>Estado: </label>
         <input type="text" name="estado" id="UsuarioUf" class="form-control" value="<?php echo($this->usuarios['estado']); ?>"/>
+        </div>
+        <div class="form-group"> 
+        <input type="hidden" name="sorteado" class="form-control" value="<?php echo($this->usuarios['estado']); ?>"/>
         </div>
         <br /><p><h3>Suas informações de Login</h3></p>
         <div class="form-group"> 

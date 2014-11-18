@@ -1,0 +1,15 @@
+<?php
+$this->title = "Excluir Jogo";
+$this->headTitle($this->title);
+?>
+<div class="container" style="margin-top:100px" />
+<p>Tem certeza que deseja excluir o jogo de código   
+ '<?php echo $this->escape($this->jogos['id']); ?>' ?
+</p>
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
+<div>
+ <input type="hidden" name="id" value="<?php echo $this->jogos['id']; ?>" />
+ <input type="submit" name="del" value="Sim" />
+ <input type="submit" name="del" value="Não" />
+</div>
+</form>

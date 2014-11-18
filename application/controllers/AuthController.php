@@ -62,10 +62,11 @@ class AuthController extends Zend_Controller_Action
         $auth->clearIdentity();
         return $this->_helper->redirector('login');
     }
+    
+    public function denied()
+    {
+        $msg = 'Você não ter permissões suficientes para acessar esta página';
+        $this->view->msg = $msg;
+    }
 
 }
-
-
-
-
-
