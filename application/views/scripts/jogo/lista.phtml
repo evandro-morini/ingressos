@@ -13,7 +13,8 @@ $this->headTitle($this->title);
         <th>Data</th>
         <th>Hora</th>
         <th>Local</th>
-        <th>Ingressos a venda</th>
+        <th>Lugares Disponíveis</th>
+        <th></th>
         <th></th>
     </tr>
     <?php foreach($this->jogos as $jogo) : ?>
@@ -25,7 +26,8 @@ $this->headTitle($this->title);
         <td><?php echo $this->escape($jogo->hora); ?></td>
         <td><?php echo $this->escape($jogo->local); ?></td>
         <td><?php echo $this->escape($jogo->vagas); ?></td>
-        <td><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'reserva', 'idJogo'=>$this->escape($jogo->id)));?>">RESERVAR</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'edit', 'id'=>$jogo->id));?>">Editar</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'delete', 'id'=>$jogo->id));?>">Excluir</a></td>
     </tr>
     <?php endforeach; ?>
 </table><br />

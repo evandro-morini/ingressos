@@ -44,8 +44,13 @@ class AuthController extends Zend_Controller_Action
                 if ( $result->isValid() ) {            
                     $info = $authAdapter->getResultRowObject(null, 'senha');
                     $storage = $auth->getStorage();
-                    $storage->write($info);                   
-                    return $this->_helper->redirector->goToRoute( array('controller' => 'usuario'), null, true);
+                    $storage->write($info); 
+                    $login = $auth->getIdentity()->login;
+                    if($login == "admin") {
+                        return $this->_helper->redirector->goToRoute( array('controller' => 'adm'), null, true);                        
+                    } else {
+                        return $this->_helper->redirector->goToRoute( array('controller' => 'usuario'), null, true);
+                    }
                 } else {                 
                     $this->_helper->FlashMessenger('Usuário ou senha inválidos!');
                     $this->_redirect('/auth/login');
@@ -63,7 +68,7 @@ class AuthController extends Zend_Controller_Action
         return $this->_helper->redirector('login');
     }
     
-    public function denied()
+    public function deniedAction()
     {
         $msg = 'Você não ter permissões suficientes para acessar esta página';
         $this->view->msg = $msg;

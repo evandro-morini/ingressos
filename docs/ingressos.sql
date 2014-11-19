@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 18-Nov-2014 às 22:22
+-- Generation Time: 19-Nov-2014 às 02:16
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -35,14 +35,15 @@ CREATE TABLE IF NOT EXISTS `auth` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `fk_userCpf_idx` (`userCpf`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Extraindo dados da tabela `auth`
 --
 
 INSERT INTO `auth` (`id`, `login`, `pw`, `isAdm`, `userCpf`) VALUES
-(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', b'1', 04763305999);
+(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', b'1', 04763305999),
+(4, 'pati.santos', '07ec938e9b4719cff2fed1b601ff4246169a3517', b'1', 06499454923);
 
 -- --------------------------------------------------------
 
@@ -61,16 +62,14 @@ CREATE TABLE IF NOT EXISTS `jogo` (
   PRIMARY KEY (`id`),
   KEY `fk_time1_idx` (`nomeTime1`),
   KEY `fk_time2_idx` (`nomeTime2`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1004 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1005 ;
 
 --
 -- Extraindo dados da tabela `jogo`
 --
 
 INSERT INTO `jogo` (`id`, `nomeTime1`, `nomeTime2`, `data`, `hora`, `local`, `vagas`) VALUES
-(1001, 'Irã', 'Nigéria', '2014-11-18', '16:00:00', 'Arena, Curitiba PR', 25000),
-(1002, 'Espanha', 'Irã', '2014-11-21', '19:00:00', 'Arena, Curitiba PR', 25000),
-(1003, 'Rússia', 'Argélia', '2015-08-25', '17:00:00', 'Arena, Curitiba PR', 24900);
+(1001, 'Irã', 'Nigéria', '2014-11-18', '16:00:00', 'Arena, Curitiba PR', 25000);
 
 -- --------------------------------------------------------
 
@@ -115,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `time` (
   `nome` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `NOMETIME` (`nome`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Extraindo dados da tabela `time`
@@ -163,7 +162,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`cpf`, `nome`, `rg`, `dataNasc`, `cep`, `endereco`, `numEndereco`, `bairro`, `cidade`, `estado`, `jogo1`, `jogo2`, `jogo3`, `sorteado`) VALUES
-(04763305999, 'Evandro Morini Silva', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL, b'0');
+(04763305999, 'Evandro Morini Silva', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL, b'0'),
+(06499454923, 'Patrícia Pacheco dos Santos', '85564447', '1987-11-15', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL, b'0');
 
 --
 -- Constraints for dumped tables

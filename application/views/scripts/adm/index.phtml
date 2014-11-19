@@ -1,0 +1,27 @@
+<?php 
+$this->title = "Administração";
+$this->headTitle($this->title);
+?>
+
+<h2 style="margin-top:100px">Administração</h2>
+
+<div class="row" style="margin-top:70px;margin-bottom:200px">
+    <div class="col-md-4">
+        <ul>
+            <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'novo'));?>">Novo usuário</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'lista'));?>">Listar usuários</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'time', 'action'=>'novo'));?>">Nova Seleção</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'index'));?>">Listar Seleções</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'novo'));?>">Novo Jogo</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'lista'));?>">Listar Jogos</a></li>
+            <li><a href="">Verificar Reservas</a></li>
+            <li><a href="">Realizar Sorteio</a></li>
+            <li><a href="">Listar Sorteios</a></li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <p>
+        Bem vindo a tela de administração! Selecione a opção desejada no menu ao lado.
+        </p>
+    </div>
+</div>

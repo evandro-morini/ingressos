@@ -9,7 +9,7 @@ $this->headTitle($this->title);
     <div class="col-md-4">
         <ul>
             <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'edit', 'cpf'=>$this->auth['userCpf']));?>">Alterar meus dados</a></li>
-            <li><a href="">Ver jogos disponíveis</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'index'));?>">Ver jogos disponíveis</a></li>
             <li><a href="">Meus jogos</a></li>
             <li><a href="">Imprimir meu Ticket</a></li>
         </ul>

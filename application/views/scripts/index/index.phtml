@@ -2,27 +2,22 @@
 <!-- Banner Superior -->
 <div class="jumbotron">
     <div class="container">
-        <h1>Seja bem vindo!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Saiba mais &raquo;</a></p>
+        <h1 align="center">Seja bem vindo!</h1><br />
+        <p align="center">Realize o sonho de assistir uma partida da Copa do Mundo 2014 numa das melhores cidades do Brasil. Traga seus familiares e viva uma experiência inesquecível!</p><br />
+        <a class="btn btn-primary btn-lg" role="button" href="https://github.com/evandrogtr/ingressos">Saiba mais &raquo;</a>
     </div>
 </div>
 
 <!-- Colunas Inferiores -->
 <div class="row">
-    <div class="col-md-4">
-        <h2>Se cadastre</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    <div class="col-md-6">
+        <h2>Faça seu cadastro</h2>
+        <p>Em poucos segundos e com apenas alguns dados essenciais você já conseguirá consultar jogos e efetuar reservas! </p>
         <p><a class="btn btn-default" href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'novo'));?>" role="button">Ver detalhes &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Veja jogos disponíveis</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="#" role="button">Ver detalhes &raquo;</a></p>
+    <div class="col-md-6">
+        <h2>Veja os jogos disponíveis</h2>
+        <p>Faça a reserva dos jogos que achar mais interessante! Concorra aos sorteios e seja escolhido para participar do evento mais aguardado do ano!</p>
+        <p><a class="btn btn-default" href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'index'));?>" role="button">Ver detalhes &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Compre ingressos</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-default" href="#" role="button">Ver detalhes &raquo;</a></p>
-    </div>
-</div>
+</div><br />
