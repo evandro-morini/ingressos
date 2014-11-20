@@ -45,8 +45,8 @@ class AuthController extends Zend_Controller_Action
                     $info = $authAdapter->getResultRowObject(null, 'senha');
                     $storage = $auth->getStorage();
                     $storage->write($info); 
-                    $login = $auth->getIdentity()->login;
-                    if($login == "admin") {
+                    $login = $auth->getIdentity()->isAdm;
+                    if($login == 1) {
                         return $this->_helper->redirector->goToRoute( array('controller' => 'adm'), null, true);                        
                     } else {
                         return $this->_helper->redirector->goToRoute( array('controller' => 'usuario'), null, true);
@@ -73,5 +73,22 @@ class AuthController extends Zend_Controller_Action
         $msg = 'Você não ter permissões suficientes para acessar esta página';
         $this->view->msg = $msg;
     }
-
+    
+    public function setadmAction ()
+    {
+        $log = Zend_Auth::getInstance();
+        if (!$log->hasIdentity()) {
+            $this->_redirect('auth/denied');
+        } else {
+            $login = $log->getIdentity()->isAdm;
+            if ($login != 1) {
+                $this->_redirect('auth/denied');
+            } else {
+                $cpf = $this->_getParam('cpf');
+                $this->view->cpf = $cpf;
+                $auth = new Application_Model_DbTable_Auth();
+                $auth->setadmAuth($cpf);
+            }
+        }
+    }
 }

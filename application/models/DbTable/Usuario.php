@@ -58,7 +58,7 @@ class Application_Model_DbTable_Usuario extends Zend_Db_Table_Abstract
         $data = array(
             "$ordem" => "$idJogo",
         );
-    $this->update($data, 'cpf = '. $cpf);
+        $this->update($data, 'cpf = '. $cpf);
     }
     
     public function verificaReserva ($cpf, $coluna)
@@ -67,6 +67,22 @@ class Application_Model_DbTable_Usuario extends Zend_Db_Table_Abstract
             ->from('usuario',array("$coluna"))
             ->where('cpf = ?', $cpf);      
         return $this->_db->fetchrow($sql);
+    }
+    
+    public function getUsuarioJogos ($idJogo)
+    {
+        $sql = $this->_db->select()
+            ->from('usuario',array('cpf'))
+            ->where('(jogo1 = ('.$idJogo.') OR jogo2 = ('.$idJogo.') OR jogo3 = ('.$idJogo.')) AND sorteado IS NULL');      
+        return $this->_db->fetchCol($sql);
+    }
+    
+    public function atualizaSorteado ($cpf, $idJogo)
+    {
+        $data = array(
+            'sorteado' => $idJogo,
+        );
+        $this->update($data, 'cpf = '. $cpf);
     }
 
 }

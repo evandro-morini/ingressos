@@ -1,4 +1,5 @@
 <?php
+require_once 'Zend\Pdf.php';
 
 class UsuarioController extends Zend_Controller_Action
 {
@@ -15,6 +16,8 @@ class UsuarioController extends Zend_Controller_Action
             $cpf = $log->getIdentity()->userCpf;
             $auth = new Application_Model_DbTable_Auth();
             $this->view->auth = $auth->getAuth($cpf);
+            $usuarios = new Application_Model_DbTable_Usuario();
+            $this->view->usuario = $usuarios->getUsuario($cpf);
         } else {
             $this->_redirect('auth/login');
         }
@@ -79,8 +82,8 @@ class UsuarioController extends Zend_Controller_Action
         if (!$log->hasIdentity()) {
             $this->_redirect('auth/denied');
         } else {
-            $login = $log->getIdentity()->login;
-            if ($login != 'admin') {
+            $login = $log->getIdentity()->isAdm;
+            if ($login != 1) {
                 $this->_redirect('auth/denied');
             } else {
                 if ($this->getRequest()->isPost()) {
@@ -108,8 +111,8 @@ class UsuarioController extends Zend_Controller_Action
         if (!$log->hasIdentity()) {
             $this->_redirect('auth/denied');
         } else {
-            $login = $log->getIdentity()->login;
-            if ($login != 'admin') {
+            $login = $log->getIdentity()->isAdm;
+            if ($login != 1) {
                 $this->_redirect('auth/denied');
             } else {
                 $usuarios = new Application_Model_DbTable_Usuario();
@@ -121,17 +124,15 @@ class UsuarioController extends Zend_Controller_Action
     public function reservaAction ()
     {
         $idJogo = $this->_getParam('idJogo');
-        
         $j1 = 'jogo1'; $j2 = 'jogo2'; $j3 = 'jogo3';
         
-        $usuarios = new Application_Model_DbTable_Usuario();
-        
+        $usuarios = new Application_Model_DbTable_Usuario();     
         $jogos = new Application_Model_DbTable_Jogo ();
-        $this->view->jogos = $jogos->getJogo($idJogo);
         
         $log = Zend_Auth::getInstance();
         if ($log->hasIdentity()) {
             $cpf = $log->getIdentity()->userCpf;
+            $msg = '';
             
             $qtdReservas1 = $usuarios->verificaReserva($cpf, $j1);
             if ($qtdReservas1['jogo1'] == '') {
@@ -153,6 +154,25 @@ class UsuarioController extends Zend_Controller_Action
             }
         } else {
             $this->_redirect('auth/login');
+        }
+        $this->view->jogos = $jogos->getJogo($idJogo);
+        $this->view->data = date("d/m/Y H:i:s");
+    }
+    
+    public function meujogoAction()
+    {
+        $cpf = $this->_getParam('cpf');
+        $usuarios = new Application_Model_DbTable_Usuario();
+        $dadosUsuario = $usuarios->getUsuario($cpf);
+        $idJogo = $dadosUsuario['sorteado'];
+        $jogos = new Application_Model_DbTable_Jogo();
+        if($idJogo == '')
+        {
+            $msg = 'Você ainda não foi sorteado, por favor continue aguardando.';
+            $this->view->msg = $msg;
+        } else {
+            $dadosJogo = $jogos->getJogo($idJogo);
+            $this->view->jogos = $dadosJogo;
         }
     }
 

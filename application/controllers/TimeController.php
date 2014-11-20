@@ -14,8 +14,8 @@ class TimeController extends Zend_Controller_Action
         if (!$log->hasIdentity()) {
             $this->_redirect('auth/denied');
         } else {
-            $login = $log->getIdentity()->login;
-            if ($login != 'admin') {
+            $login = $log->getIdentity()->isAdm;
+            if ($login != 1) {
                 $this->_redirect('auth/denied');
             } else {
                 $times = new Application_Model_DbTable_Time();
@@ -30,8 +30,8 @@ class TimeController extends Zend_Controller_Action
         if (!$log->hasIdentity()) {
             $this->_redirect('auth/denied');
         } else {
-            $login = $log->getIdentity()->login;
-            if ($login != 'admin') {
+            $login = $log->getIdentity()->isAdm;
+            if ($login != 1) {
                 $this->_redirect('auth/denied');
             } else {
                 if ($this->getRequest()->isPost()) {
@@ -52,8 +52,8 @@ class TimeController extends Zend_Controller_Action
         if (!$log->hasIdentity()) {
             $this->_redirect('auth/denied');
         } else {
-            $login = $log->getIdentity()->login;
-            if ($login != 'admin') {
+            $login = $log->getIdentity()->isAdm;
+            if ($login != 1) {
                 $this->_redirect('auth/denied');
             } else {
                 if ($this->getRequest()->isPost()) {          
@@ -78,8 +78,8 @@ class TimeController extends Zend_Controller_Action
         if (!$log->hasIdentity()) {
             $this->_redirect('auth/denied');
         } else {
-            $login = $log->getIdentity()->login;
-            if ($login != 'admin') {
+            $login = $log->getIdentity()->isAdm;
+            if ($login != 1) {
                 $this->_redirect('auth/denied');
             } else {
                 if ($this->getRequest()->isPost()) {

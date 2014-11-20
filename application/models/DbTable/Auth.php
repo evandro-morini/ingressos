@@ -19,7 +19,6 @@ class Application_Model_DbTable_Auth extends Zend_Db_Table_Abstract
         $data = array(
             'login' => $login,
             'pw' => sha1($pw),
-            'isAdm' => 0,
             'userCpf' => $cpf,
         );        
     $this->insert($data);
@@ -30,7 +29,6 @@ class Application_Model_DbTable_Auth extends Zend_Db_Table_Abstract
         $data = array(
             'login' => $login,
             'pw' => sha1($pw),
-            'isAdm' => 0,
             'userCpf' => $cpf,
         );        
     $this->update($data, 'userCpf = '. $cpf);
@@ -39,6 +37,14 @@ class Application_Model_DbTable_Auth extends Zend_Db_Table_Abstract
      public function deleteAuth($cpf)
     {
         $this->delete('userCpf =' . $cpf);
+    }
+    
+    public function setadmAuth($cpf)
+    {
+        $data = array(
+            'isAdm' => 1,
+        );
+        $this->update($data, 'userCpf = '. $cpf);
     }
 
 }

@@ -45,6 +45,14 @@ class Application_Model_DbTable_Jogo extends Zend_Db_Table_Abstract
     {
         $this->delete('id =' . $id);
     }
+    
+    public function atualizaVagas($id, $vagas)
+    {
+        $data = array(
+            'vagas' => $vagas,
+        );
+        $this->update($data, 'id = '. $id);
+    }
 
 }
 

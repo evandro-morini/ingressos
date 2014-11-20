@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 19-Nov-2014 às 02:16
+-- Generation Time: 20-Nov-2014 às 04:59
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -30,20 +30,21 @@ CREATE TABLE IF NOT EXISTS `auth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(15) NOT NULL,
   `pw` varchar(60) NOT NULL,
-  `isAdm` bit(1) NOT NULL,
+  `isAdm` int(11) DEFAULT NULL,
   `userCpf` bigint(11) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `fk_userCpf_idx` (`userCpf`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Extraindo dados da tabela `auth`
 --
 
 INSERT INTO `auth` (`id`, `login`, `pw`, `isAdm`, `userCpf`) VALUES
-(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', b'1', 04763305999),
-(4, 'pati.santos', '07ec938e9b4719cff2fed1b601ff4246169a3517', b'1', 06499454923);
+(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 04763305999),
+(4, 'pati.santos', '07ec938e9b4719cff2fed1b601ff4246169a3517', NULL, 06499454923),
+(9, 'teste', '2e6f9b0d5885b6010f9167787445617f553a735f', NULL, 00000045678);
 
 -- --------------------------------------------------------
 
@@ -69,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `jogo` (
 --
 
 INSERT INTO `jogo` (`id`, `nomeTime1`, `nomeTime2`, `data`, `hora`, `local`, `vagas`) VALUES
-(1001, 'Irã', 'Nigéria', '2014-11-18', '16:00:00', 'Arena, Curitiba PR', 25000);
+(1001, 'Irã', 'Nigéria', '2014-11-18', '16:00:00', 'Arena, Curitiba PR', 0);
 
 -- --------------------------------------------------------
 
@@ -80,28 +81,19 @@ INSERT INTO `jogo` (`id`, `nomeTime1`, `nomeTime2`, `data`, `hora`, `local`, `va
 CREATE TABLE IF NOT EXISTS `sorteio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` date NOT NULL,
-  `id_responsavel` bigint(11) unsigned zerofill NOT NULL,
-  `id_jogo` int(11) NOT NULL,
+  `idResponsavel` bigint(11) unsigned zerofill NOT NULL,
+  `idJogo` int(11) NOT NULL,
   `sorteados` text,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_responsavel_UNIQUE` (`id_responsavel`),
-  KEY `fk_jogoSorteio_idx` (`id_jogo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+  KEY `fk_jogoSorteio_idx` (`idJogo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
--- Estrutura da tabela `ticket`
+-- Extraindo dados da tabela `sorteio`
 --
 
-CREATE TABLE IF NOT EXISTS `ticket` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_usuario` bigint(11) unsigned zerofill NOT NULL,
-  `id_jogo` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_usuario_UNIQUE` (`id_usuario`),
-  KEY `fk_jogo_idx` (`id_jogo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+INSERT INTO `sorteio` (`id`, `data`, `idResponsavel`, `idJogo`, `sorteados`) VALUES
+(13, '2014-11-20', 04763305999, 1001, '06499454923 ');
 
 -- --------------------------------------------------------
 
@@ -150,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `jogo1` int(11) DEFAULT NULL,
   `jogo2` int(11) DEFAULT NULL,
   `jogo3` int(11) DEFAULT NULL,
-  `sorteado` bit(1) NOT NULL,
+  `sorteado` int(11) DEFAULT NULL,
   PRIMARY KEY (`cpf`),
   KEY `fk_jogo1_idx` (`jogo1`),
   KEY `fk_jogo2_idx` (`jogo2`),
@@ -162,8 +154,9 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`cpf`, `nome`, `rg`, `dataNasc`, `cep`, `endereco`, `numEndereco`, `bairro`, `cidade`, `estado`, `jogo1`, `jogo2`, `jogo3`, `sorteado`) VALUES
-(04763305999, 'Evandro Morini Silva', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL, b'0'),
-(06499454923, 'Patrícia Pacheco dos Santos', '85564447', '1987-11-15', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL, b'0');
+(00000045678, 'Teste Teste', '987654321', '2001-01-01', 81130200, 'Rua José Rodrigues Pinheiro', 666, 'Capão Raso', 'Curitiba', 'PR', 1001, NULL, NULL, NULL),
+(04763305999, 'Evandro Morini Silva', '62446005', '1985-08-19', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', NULL, NULL, NULL, NULL),
+(06499454923, 'Patrícia Pacheco dos Santos', '85564447', '1987-11-15', 81130200, 'Rua José Rodrigues Pinheiro', 1431, 'Capão Raso', 'Curitiba', 'PR', 1001, 1001, 1001, 1001);
 
 --
 -- Constraints for dumped tables
@@ -186,15 +179,7 @@ ALTER TABLE `jogo`
 -- Limitadores para a tabela `sorteio`
 --
 ALTER TABLE `sorteio`
-  ADD CONSTRAINT `fk_jogoSorteio` FOREIGN KEY (`id_jogo`) REFERENCES `jogo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usuarioSorteio` FOREIGN KEY (`id_responsavel`) REFERENCES `usuario` (`cpf`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Limitadores para a tabela `ticket`
---
-ALTER TABLE `ticket`
-  ADD CONSTRAINT `fk_jogo` FOREIGN KEY (`id_jogo`) REFERENCES `jogo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`cpf`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_jogoSorteio` FOREIGN KEY (`idJogo`) REFERENCES `jogo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `usuario`

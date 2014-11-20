@@ -9,12 +9,15 @@ $this->headTitle($this->title);
     <div class="col-md-4">
         <ul>
             <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'edit', 'cpf'=>$this->auth['userCpf']));?>">Alterar meus dados</a></li>
-            <li><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'index'));?>">Ver jogos disponíveis</a></li>
-            <li><a href="">Meus jogos</a></li>
-            <li><a href="">Imprimir meu Ticket</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'index'));?>">Ver jogos disponíveis</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'meujogo', 'cpf'=>$this->auth['userCpf']));?>">Meu jogo sorteado</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'pdf'));?>">Gerar meu Ticket</a></li>
         </ul>
     </div>
     <div class="col-md-6">
+        <?php if($this->usuario['sorteado'] != '') { ?>
+        <div class="alert-success" align='center'>PARABÉNS, Você foi sorteado(a)! Confirma mais informações na tela Meu Jogo Sorteado</div>
+        <?php } ?>
         <p>
         Bem vindo! Aqui você pode alterar seus dados pessoais, login, senha, escolher os jogos que deseja assistir,
         além de ficar por dentro de todas as novidades em que estamos trabalhando. Selecione a opção desejada no menu

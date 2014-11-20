@@ -1,0 +1,22 @@
+
+<h2 style="margin-top:100px">Novo Sorteio</h2><br />
+
+<?php if($this->msg != '') { ?>
+<p><?php print_r($this->msg); } else { ?></p>
+
+<div class="container">
+    
+    <p>O sorteio para o jogo de código <b><?php echo $this->dadosJogo['id']; ?></b> entre <b><?php echo $this->dadosJogo['nomeTime1']; ?></b>
+    e <b><?php echo $this->dadosJogo['nomeTime2']; ?></b> que ocorrerá no dia <b><?php echo $this->dadosJogo['data']; ?></b> às 
+    <b><?php echo $this->dadosJogo['hora']; ?></b> horas na <b><?php echo $this->dadosJogo['local']; ?></b> foi efetuado com sucesso.</p>
+    
+    <p>Os contemplados foram os CPF's <b><?php echo $this->sorteados; ?></b></p>
+    
+    <p>*Todos os sorteados serão avisados no meu painel de acesso (tela Meu Jogo)</p>
+    
+    Data do sorteio: <b><?php echo $this->data; ?></b><br />
+    Dcto do Responsável: <b><?php echo $this->idResponsavel; ?></b><br /><br />
+    
+<?php } ?>
+<p><a href="<?php echo $this->url(array('controller'=>'adm', 'action'=>'index'));?>">Retornar a Administração</a></p>
+</div>

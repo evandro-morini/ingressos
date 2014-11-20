@@ -52,7 +52,7 @@
         
         <div class="form-group">   
         <label>Lugares Disponíveis: </label>
-        <input type="text" name="vagas" class="form-control" value="<?php echo($this->jogos['vagas']); ?>" required/>
+        <input type="text" name="vagas" class="form-control" value="<?php echo($this->jogos['vagas']); ?>" pattern="[0-9]+$" required/>
         </div>
         
         <div class="form-group"> 

@@ -17,6 +17,7 @@ $this->headTitle($this->title);
         <th>Cidade</th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
     <?php foreach($this->usuarios as $usuario) : ?>
     <tr>
@@ -30,6 +31,7 @@ $this->headTitle($this->title);
         <td><?php echo $this->escape($usuario->cidade); ?></td>
         <td><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'edit', 'cpf'=>$usuario->cpf));?>">Editar</a></td>
         <td><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'delete', 'cpf'=>$usuario->cpf));?>">Excluir</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'auth', 'action'=>'setadm', 'cpf'=>$this->escape($usuario->cpf)));?>">ADM?</a></td>
     </tr>
     <?php endforeach; ?>
 </table><br />

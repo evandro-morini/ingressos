@@ -2,8 +2,8 @@
 <?php if($this->msg != '') { ?>
 <p><?php print_r($this->msg); } else { ?></p>
     <p>Parabéns! <br />
-        Você efetuou a reserva em <?php echo $this->data; ?> <br />
-        Confira os dados do Jogo:
+        Você foi sorteado! <br />
+        Confira os dados do seu Jogo:
     </p>
     
 <table class="table">
@@ -37,6 +37,6 @@
     </tr>
 </table><br />
 <?php } ?>
-<p>Aguarde a realização do sorteio!</p>
+<p><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'pdf'));?>">Gerar meu Ticket</a></p>
 <p><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'index'));?>">Retornar ao Painel</a></p>
 </div>

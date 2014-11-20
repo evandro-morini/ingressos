@@ -6,8 +6,6 @@
 
         <!-- JS -->
         <?php $this->headScript()->appendFile($this->baseURL() . '/js/jquery-2.1.1.js'); ?>
-        <?php $this->headScript()->appendFile($this->baseURL() . '/js/jquery.maskedinput.js'); ?>
-        <?php $this->headScript()->appendFile($this->baseURL() . '/js/formMasks.js'); ?>
         <?php $this->headScript()->appendFile($this->baseURL() . '/js/bootstrap.min.js'); ?>
         <?php $this->headScript()->appendFile($this->baseURL() . '/js/buscaCep.js'); ?>
         <?php echo $this->headScript(); ?>
@@ -26,9 +24,17 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li></li>
+                    <?php 
+                        $log = Zend_Auth::getInstance();
+                        $login = $log->getIdentity()->isAdm;
+                        if ($login == 1) {
+                    ?>
+                        <li><a href="<?php echo $this->url(array('controller'=>'adm', 'action'=>'index'));?>">Administração</a></li>
+                    <?php } else { ?>
                     <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'novo'));?>">Quero me cadastrar</a></li>
                     <li><a href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'index'));?>">Jogos Disponíveis</a></li>
                     <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'index'));?>">Meu Painel</a></li>
+                    <?php } ?>
                 </ul>
                 <div class="navbar-collapse collapse">
                     <div class="navbar-brand navbar-right">
