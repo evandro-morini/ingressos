@@ -175,5 +175,49 @@ class UsuarioController extends Zend_Controller_Action
             $this->view->jogos = $dadosJogo;
         }
     }
+    
+    public function ticketAction()
+    {
+        require_once 'Zend/Pdf.php';
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
+        $pdf = new Zend_Pdf();
+        $page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+        $page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA), 12);
+        
+        $cpf = $this->_getParam('cpf');
+        $usuarios = new Application_Model_DbTable_Usuario();
+        $dadosUsuario = $usuarios->getUsuario($cpf);
+        $idJogo = $dadosUsuario['sorteado'];
+        $jogos = new Application_Model_DbTable_Jogo();
+        if($idJogo == '')
+        {
+            $page->drawText('Você ainda não foi sorteado, por favor continue aguardando.', 100, 100);
+        } else {
+            $dadosJogo = $jogos->getJogo($idJogo);
+            $page->drawText('CPF ', 50, 500, 'UTF-8');
+            $page->drawText($cpf, 80, 500, 'UTF-8');
+            $page->drawText('Cod. Jogo', 50, 450, 'UTF-8');
+            $page->drawText($dadosJogo['id'], 120, 450, 'UTF-8');
+            $page->drawText('Seleção mandante', 200, 400, 'UTF-8');
+            $page->drawText($dadosJogo['nomeTime1'], 200, 350, 'UTF-8');
+            $page->drawText('Seleção visitante', 400, 400, 'UTF-8');
+            $page->drawText($dadosJogo['nomeTime2'], 400, 350, 'UTF-8');
+            $page->drawText('Data', 50, 300, 'UTF-8');
+            $page->drawText($dadosJogo['data'], 90, 300, 'UTF-8');
+            $page->drawText('Hora', 50, 250, 'UTF-8');
+            $page->drawText($dadosJogo['hora'], 90, 250, 'UTF-8');
+            $page->drawText('Local', 50, 200, 'UTF-8');
+            $page->drawText($dadosJogo['local'], 90, 200, 'UTF-8');
+        }
+        
+        $page->drawText('Sistema de Ingressos', 50, 50, 'UTF-8');
+        $pdf->pages[0] = $page;
+
+        header('Content-Type: application/pdf');
+        echo $pdf->render();
+    }
 
 }

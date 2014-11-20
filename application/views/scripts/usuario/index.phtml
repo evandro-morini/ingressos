@@ -11,7 +11,7 @@ $this->headTitle($this->title);
             <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'edit', 'cpf'=>$this->auth['userCpf']));?>">Alterar meus dados</a></li>
             <li><a href="<?php echo $this->url(array('controller'=>'jogo', 'action'=>'index'));?>">Ver jogos disponíveis</a></li>
             <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'meujogo', 'cpf'=>$this->auth['userCpf']));?>">Meu jogo sorteado</a></li>
-            <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'pdf'));?>">Gerar meu Ticket</a></li>
+            <li><a href="<?php echo $this->url(array('controller'=>'usuario', 'action'=>'ticket', 'cpf'=>$this->auth['userCpf']));?>">Gerar meu Ticket</a></li>
         </ul>
     </div>
     <div class="col-md-6">
